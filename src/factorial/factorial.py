@@ -20,9 +20,35 @@ def factorial(num):
             num -= 1
         return fact 
 
-if len(sys.argv) == 0:
-   print("Debe informar un número!")
-   sys.exit()
-num=int(sys.argv[1])
-print("Factorial ",num,"! es ", factorial(num)) 
+# Si se pasa argumento por consola
+if len(sys.argv) > 1:
+    entrada = sys.argv[1]
+else:
+    # Si no, pedir por teclado
+    entrada = input("Ingrese un número o rango: ")
 
+# Procesamiento de la entrada
+if "-" in entrada:
+    partes = entrada.split("-")
+
+    # Caso "-hasta" (ej: -10)
+    if partes[0] == "":
+        desde = 1
+        hasta = int(partes[1])
+
+    # Caso "desde-" (ej: 4-)
+    elif partes[1] == "":
+        desde = int(partes[0])
+        hasta = 60
+
+    # Caso "desde-hasta" (ej: 4-8)
+    else:
+        desde = int(partes[0])
+        hasta = int(partes[1])
+
+    for i in range(desde, hasta + 1):
+        print("Factorial ", i, "! es ", factorial(i))
+
+else:
+    num = int(entrada)
+    print("Factorial ", num, "! es ", factorial(num))
